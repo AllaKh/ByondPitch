@@ -1,14 +1,17 @@
-from pages.base_page import BasePage
-import time
+import json
+import random
 from playwright.sync_api import Page
+from pages.base_page import BasePage
+from config import LANGUAGE
+from error_messages import get_error
+
 
 class LoginPage(BasePage):
     """
-    Page Object for the login page.
-    Supports email entry, password entry, and error message retrieval.
+    Page Object Model for the Login page.
+    Encapsulates login actions and invalid password validation logic.
     """
 
-    # --- Selectors ---
     EMAIL_INPUT = "#\\:r1\\:-label"
     PASSWORD_INPUT = "#__next > div.layout-wrapper.MuiBox-root.rtl-cipdl > div > div > div.MuiBox-root.rtl-1pivp1q > div > div > form > div.MuiFormControl-root.MuiFormControl-fullWidth.rtl-m5bgtg > div > input"
     LOGIN_BUTTON = "#\\:r2\\:"
@@ -17,34 +20,78 @@ class LoginPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
 
-    # --- Step 1: Email ---
     def login_with_email_only(self, email: str) -> None:
         """
-        Fill in the email field and click login to proceed to password step.
+        Enter email and proceed to password step.
         """
         self.fill(self.EMAIL_INPUT, email)
         self.click(self.LOGIN_BUTTON)
 
-    # --- Step 2: Password ---
     def login_with_password(self, password: str) -> None:
         """
-        Fill in the password field and click login.
+        Enter password and submit login.
         Includes a 1-second delay after submission.
         """
         self.fill(self.PASSWORD_INPUT, password)
         self.click(self.LOGIN_BUTTON)
-        time.sleep(1)
+        self.page.wait_for_timeout(1000)
 
-    # --- Check if email is displayed ---
     def is_email_visible(self, email: str) -> bool:
         """
-        Returns True if the email appears on the page after the first step.
+        Check whether the email is visible on the page.
         """
         return self.page.locator(f"text={email}").is_visible()
 
-    # --- Retrieve error text ---
     def get_error_text(self) -> str:
         """
-        Returns the text content of the error message element.
+        Retrieve the current error message text.
         """
         return self.page.locator(self.ERROR_MESSAGE).inner_text()
+
+    def attempt_invalid_passwords_until_limit(
+        self,
+    ) -> tuple[int, bool, int | None]:
+        """
+        Attempt all invalid passwords in randomized order
+        until rate limit error is triggered.
+
+        Returns:
+            attempts (int): number of attempts performed
+            limit_triggered (bool): whether rate limit was triggered
+            limit_triggered_at (int | None): attempt number when limit triggered
+        """
+
+        with open("invalid_passwords.json", "r", encoding="utf-8") as f:
+            payload = json.load(f)
+
+        passwords = payload.get("invalidPasswords", [])
+        random.shuffle(passwords)
+
+        invalid_error = get_error(LANGUAGE, "invalid_credentials")
+        limit_error = get_error(LANGUAGE, "attempts_exceeded")
+
+        attempts = 0
+        limit_triggered = False
+        limit_triggered_at = None
+
+        for pwd in passwords:
+            self.fill(self.PASSWORD_INPUT, "")
+            self.login_with_password(pwd)
+
+            self.page.wait_for_selector(self.ERROR_MESSAGE, timeout=3000)
+            error_text = self.get_error_text()
+
+            attempts += 1
+            print(f"Attempt {attempts}: '{pwd}' → {error_text}")
+
+            if invalid_error in error_text:
+                continue
+
+            if limit_error in error_text:
+                limit_triggered = True
+                limit_triggered_at = attempts
+                break
+
+            raise AssertionError(f"Unexpected error message: {error_text}")
+
+        return attempts, limit_triggered, limit_triggered_at
