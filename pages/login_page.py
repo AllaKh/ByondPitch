@@ -20,21 +20,36 @@ class LoginPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
 
+    def login(self, email: str, password: str) -> None:
+        """
+        Perform full login with email and password.
+        """
+        self.wait_visible(self.EMAIL_INPUT)
+        self.fill(self.EMAIL_INPUT, email)
+        self.click(self.LOGIN_BUTTON)
+
+        self.wait_visible(self.PASSWORD_INPUT)
+        self.fill(self.PASSWORD_INPUT, password)
+        self.click(self.LOGIN_BUTTON)
+
+        self.page.wait_for_load_state("networkidle")
+
     def login_with_email_only(self, email: str) -> None:
         """
         Enter email and proceed to password step.
         """
+        self.wait_visible(self.EMAIL_INPUT)
         self.fill(self.EMAIL_INPUT, email)
         self.click(self.LOGIN_BUTTON)
+        self.wait_visible(self.PASSWORD_INPUT)
 
     def login_with_password(self, password: str) -> None:
         """
         Enter password and submit login.
-        Includes a 1-second delay after submission.
         """
+        self.wait_visible(self.PASSWORD_INPUT)
         self.fill(self.PASSWORD_INPUT, password)
         self.click(self.LOGIN_BUTTON)
-        self.page.wait_for_timeout(1000)
 
     def is_email_visible(self, email: str) -> bool:
         """
@@ -46,6 +61,7 @@ class LoginPage(BasePage):
         """
         Retrieve the current error message text.
         """
+        self.wait_visible(self.ERROR_MESSAGE)
         return self.page.locator(self.ERROR_MESSAGE).inner_text()
 
     def attempt_invalid_passwords_until_limit(

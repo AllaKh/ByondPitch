@@ -5,8 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="95c01376-bed6-4c49-a4c1-3301369ff087" name="Changes" comment="26/03/2026">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/dashboard_page.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/meeting_lobby_page.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/meeting_room_page.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/projects_dropdown.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/start_meeting_dialog.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/test_start_meeting.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/conftest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/base_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/base_page.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/login_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login_page.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_login.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_login.py1" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +41,7 @@
 }</component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
-    "url": "https://github.com/AllaKhananashvili/ByondPitch_error_login.git",
+    "url": "git@github.com:AllaKh/ByondPitch.git",
     "accountId": "27ad4f1e-0e25-4723-9970-ebe9126e9c04"
   }
 }]]></component>
