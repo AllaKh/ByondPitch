@@ -4,19 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95c01376-bed6-4c49-a4c1-3301369ff087" name="Changes" comment="26/03/2026">
-      <change afterPath="$PROJECT_DIR$/pages/dashboard_page.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/meeting_lobby_page.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/meeting_room_page.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/projects_dropdown.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/start_meeting_dialog.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_start_meeting.py" afterDir="false" />
+    <list default="true" id="95c01376-bed6-4c49-a4c1-3301369ff087" name="Changes" comment="27/03/2026">
+      <change afterPath="$PROJECT_DIR$/languages.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/conftest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/base_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/base_page.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/login_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login_page.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/dashboard_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard_page.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/meeting_room_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/meeting_room_page.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_login.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_login.py1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_start_meeting.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_start_meeting.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,12 +100,29 @@
       <option name="project" value="LOCAL" />
       <updated>1774519050037</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="27/03/2026">
+      <option name="closed" value="true" />
+      <created>1774622789778</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1774622789778</updated>
+    </task>
+    <task id="LOCAL-00005" summary="27/03/2026">
+      <option name="closed" value="true" />
+      <created>1774622827387</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1774622827387</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="25/03/2026" />
     <MESSAGE value="26/03/2026" />
-    <option name="LAST_COMMIT_MESSAGE" value="26/03/2026" />
+    <MESSAGE value="27/03/2026" />
+    <option name="LAST_COMMIT_MESSAGE" value="27/03/2026" />
   </component>
 </project>

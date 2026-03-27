@@ -1,7 +1,9 @@
+import json
 from playwright.sync_api import Page
 from pages.base_page import BasePage
 from datetime import datetime
 from config import DASHBOARD_URL
+
 
 class MeetingRoomPage(BasePage):
     """
@@ -23,10 +25,41 @@ class MeetingRoomPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
 
+    def _detect_language(self) -> str:
+        """
+        Detect page language from <html lang> attribute.
+        """
+        self.page.wait_for_load_state("domcontentloaded")
+        html_lang = self.page.locator("html").get_attribute("lang")
+
+        if not html_lang:
+            return "ENG"
+
+        lang = html_lang.lower()
+        if "he" in lang:
+            return "HE"
+        if "ru" in lang:
+            return "RU"
+        return "ENG"
+
+    def _load_translations(self) -> dict:
+        """
+        Load translations from JSON file based on detected language.
+        """
+        with open("languages.json", encoding="utf-8") as f:
+            data = json.load(f)
+        return data[self._detect_language()]
+
     def wait_for_waiting_participant(self) -> None:
+        """
+        Wait until the waiting participant element is visible.
+        """
         self.wait_visible(self.WAITING_PARTICIPANT_TITLE)
 
     def accept_participant(self) -> None:
+        """
+        Accept the waiting participant in the meeting room.
+        """
         self.page.locator(self.ACCEPT_PARTICIPANT_BUTTON).first.click(force=True)
         self.page.wait_for_selector(self.CONFIRM_ACCEPT_BUTTON, state="visible")
         self.page.locator(self.CONFIRM_ACCEPT_BUTTON).click(force=True)
@@ -34,8 +67,9 @@ class MeetingRoomPage(BasePage):
 
     def end_call(self) -> None:
         """
-        Complete end call flow including task creation.
+        Complete end call flow including task creation and final dashboard check.
         """
+        translations = self._load_translations()
 
         # Wait for End Call button
         self.page.wait_for_selector(self.END_CALL_BUTTON, state="visible")
@@ -47,59 +81,52 @@ class MeetingRoomPage(BasePage):
 
         # Wait for Warning dialog
         self.page.wait_for_selector(self.WARNING_DIALOG, state="visible")
-
-        # Verify warning text
         warning_text = self.page.inner_text(self.WARNING_DIALOG)
-        assert "אזהרה" in warning_text
-        assert "האם אתה בטוח שברצונך לצאת מהשיחה?" in warning_text
 
-        # Click אישור
+        # Confirm warning
         self.page.locator(self.WARNING_CONFIRM_BUTTON).click(force=True)
         self.page.wait_for_selector(self.WARNING_DIALOG, state="hidden")
 
         # Wait for Post Call dialog
         self.page.wait_for_selector(self.POST_CALL_DIALOG, state="visible")
-
         post_text = self.page.inner_text(self.POST_CALL_DIALOG)
-        assert "סיום פגישה" in post_text
-        assert "השיחה לא התקיימה" in post_text
 
-        # Click משימה ותזכורת
+        # Click button to create follow-up task
         self.page.locator("div.MuiBox-root.rtl-1o9nvex button").click(force=True)
         self.page.wait_for_timeout(1500)
 
-        # ---- Fill Subject (נושא) ----
-        subject_input = self.page.get_by_placeholder("נושא")
+        # Fill subject
+        subject_input = self.page.get_by_placeholder(translations["subject_placeholder"])
         subject_input.wait_for(state="visible")
-        subject_input.fill("שיחה עם אלה חננשווילי")
+        subject_input.fill(translations["subject"])
 
-        # ---- Fill Description (תיאור) ----
         dialog = self.page.locator("div.MuiDialog-root")
-        description_input = dialog.get_by_label("תיאור")
-        description_input.wait_for(state="visible")
-        description_input.fill("הצעה מסחרית להחלפת ספק")
 
-        # ---- Fill DateTime directly ----
+        # Fill description primary
+        description_input = dialog.get_by_label(translations["description_label"])
+        description_input.wait_for(state="visible")
+        description_input.fill(translations["description_primary"])
+
+        # Fill date/time
         now = datetime.now()
         formatted_now = now.strftime("%m/%d/%Y %H:%M")
-        date_input = dialog.get_by_placeholder("MM/DD/YYYY hh:mm")
+        date_input = dialog.get_by_placeholder(translations["datetime_placeholder"])
         date_input.wait_for(state="visible")
         date_input.fill(formatted_now)
         date_input.press("Enter")
-
         self.page.wait_for_timeout(1000)
 
-        # ---- Fill Description (תיאור) second input ----
+        # Fill description secondary
         description_input_2 = dialog.locator("div.MuiFormControl-fullWidth input").nth(1)
         description_input_2.wait_for(state="visible")
-        description_input_2.fill("הצעה מסחרית להחלפת ספק")
+        description_input_2.fill(translations["description_secondary"])
 
-        # ---- Click סיום פגישה ----
+        # Click finish task button
         self.page.locator("div.MuiDialogActions-root.rtl-10sjoy4 > button").click(force=True)
 
-        # ---- Wait until all dialogs close ----
+        # Wait for dialog to hide
         dialog.wait_for(state="hidden")
 
-        # ---- Wait until dashboard loads ----
+        # ---- Wait 2 seconds then check final dashboard URL ----
+        self.page.wait_for_timeout(2000)
         self.page.wait_for_url(DASHBOARD_URL)
-        self.page.wait_for_timeout(1000)

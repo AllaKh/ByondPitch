@@ -1,0 +1,46 @@
+{
+  "HE": {
+    "warning_title": "אזהרה",
+    "warning_question": "האם אתה בטוח שברצונך לצאת מהשיחה?",
+    "post_call_title": "סיום פגישה",
+    "post_call_subtitle": "השיחה לא התקיימה",
+
+    "subject_placeholder": "נושא",
+    "description_label": "תיאור",
+    "datetime_placeholder": "MM/DD/YYYY hh:mm",
+
+    "subject": "שיחה עם אלה חננשווילי",
+    "description_primary": "הצעה מסחרית לשדרוג שירות",
+    "description_secondary": "מעקב לקוח והכנת הצעת מחיר"
+  },
+
+  "ENG": {
+    "warning_title": "Warning",
+    "warning_question": "Are you sure you want to leave the meeting?",
+    "post_call_title": "End Meeting",
+    "post_call_subtitle": "The meeting did not take place",
+
+    "subject_placeholder": "Subject",
+    "description_label": "Description",
+    "datetime_placeholder": "MM/DD/YYYY hh:mm",
+
+    "subject": "Call with Ella Hananashvili",
+    "description_primary": "Commercial proposal for service upgrade",
+    "description_secondary": "Client follow-up and price preparation"
+  },
+
+  "RU": {
+    "warning_title": "Предупреждение",
+    "warning_question": "Вы уверены, что хотите выйти из встречи?",
+    "post_call_title": "Завершение встречи",
+    "post_call_subtitle": "Встреча не состоялась",
+
+    "subject_placeholder": "Тема",
+    "description_label": "Описание",
+    "datetime_placeholder": "MM/DD/YYYY hh:mm",
+
+    "subject": "Звонок с Эллой Хананашвили",
+    "description_primary": "Коммерческое предложение по обновлению сервиса",
+    "description_secondary": "Подготовка КП и последующий контакт"
+  }
+}

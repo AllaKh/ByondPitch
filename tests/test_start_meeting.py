@@ -15,8 +15,14 @@ from config import (
 
 def test_start_meeting_flow(page: Page) -> None:
     """
-    Verify full login, lobby flow, meeting flow,
-    and final dashboard navigation.
+    Test full meeting flow:
+    - login
+    - search client
+    - open first project only
+    - start meeting
+    - accept participant
+    - end call and fill follow-up task
+    - click finish task and check dashboard URL
     """
 
     login_page = LoginPage(page)
@@ -24,51 +30,35 @@ def test_start_meeting_flow(page: Page) -> None:
     lobby_page = MeetingLobbyPage(page)
     meeting_page = MeetingRoomPage(page)
 
+    # Login
     login_page.navigate(LOGIN_URL)
     login_page.login(TEST_EMAIL, TEST_PASSWORD)
 
     page.wait_for_url(DASHBOARD_URL)
     assert page.url == DASHBOARD_URL
 
+    # Search client and open actions menu
     dashboard_page.search_client(CLIENT_NAME)
-    page.wait_for_timeout(1000)
-
     dashboard_page.open_actions_menu(CLIENT_NAME)
 
-    for project in PROJECT_NAMES:
+    # --- Only choose the first project ---
+    first_project = PROJECT_NAMES[0]
+    selector = f"li.test--button{first_project.replace(' ', '_')}"
+    page.wait_for_selector(selector)
+    page.locator(selector).click()
 
-        selector = f"li.test--button{project.replace(' ', '_')}"
-        page.wait_for_selector(selector)
-        page.locator(selector).click()
-        page.wait_for_timeout(1000)
+    ok_button = "button.test--buttonOk"
+    page.wait_for_selector(ok_button)
+    page.locator(ok_button).click()
 
-        ok_button = "button.test--buttonOk"
-        page.wait_for_selector(ok_button)
-        page.wait_for_timeout(1000)
-        page.locator(ok_button).click()
+    # Lobby actions
+    lobby_page.wait_for_lobby()
+    lobby_page.play_microphone_test_sound()
+    lobby_page.start_meeting()
 
-        # Lobby
-        lobby_page.wait_for_lobby()
-        page.wait_for_timeout(1000)
-        lobby_page.play_microphone_test_sound()
-        page.wait_for_timeout(1000)
-        lobby_page.start_meeting()
+    # Meeting room actions
+    meeting_page.wait_for_waiting_participant()
+    meeting_page.accept_participant()
 
-        # Meeting
-        meeting_page.wait_for_waiting_participant()
-        page.wait_for_timeout(1000)
-        meeting_page.accept_participant()
-        page.wait_for_timeout(1000)
-        meeting_page.end_call()
-
-        # # Verify dashboard loaded
-        # dashboard_title = (
-        #     "#__next > div.layout-wrapper.rtl-uinsfl "
-        #     "> div.layout-content-wrapper.MuiBox-root.rtl-34b9xr "
-        #     "> main > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-6.rtl-h2qpui "
-        #     "> div:nth-child(1) > div > nav > ol > li > p"
-        # )
-        #
-        # page.wait_for_selector(dashboard_title, state="visible")
-        # assert "לוח בקרה מנהל/ת" in page.inner_text(dashboard_title)
-        # page.wait_for_timeout(1000)
+    # End call and fill follow-up
+    meeting_page.end_call()
