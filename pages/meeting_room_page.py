@@ -109,7 +109,14 @@ class MeetingRoomPage(BasePage):
 
         # Fill date/time
         now = datetime.now()
-        formatted_now = now.strftime("%m/%d/%Y %H:%M")
+        month = str(now.month).zfill(2)
+        day = str(now.day).zfill(2)
+        year = str(now.year)
+        hour = str(now.hour).zfill(2)
+        minute = str(now.minute).zfill(2)
+
+        formatted_now = f"{month}/{day}/{year} {hour}:{minute}"  # MM/DD/YYYY HH:MM
+
         date_input = dialog.get_by_placeholder(translations["datetime_placeholder"])
         date_input.wait_for(state="visible")
         date_input.fill(formatted_now)

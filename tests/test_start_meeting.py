@@ -62,3 +62,4 @@ def test_start_meeting_flow(page: Page) -> None:
 
     # End call and fill follow-up
     meeting_page.end_call()
+    assert page.url == DASHBOARD_URL
