@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95c01376-bed6-4c49-a4c1-3301369ff087" name="Changes" comment="27/03/2026 22:23">
+    <list default="true" id="95c01376-bed6-4c49-a4c1-3301369ff087" name="Changes" comment="28/03/2026">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/meeting_room_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/meeting_room_page.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_start_meeting.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_start_meeting.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,12 +29,12 @@
     &quot;assignee&quot;: &quot;AllaKh&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "git@github.com:AllaKh/ByondPitch.git",
-    "accountId": "27ad4f1e-0e25-4723-9970-ebe9126e9c04"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:AllaKh/ByondPitch.git&quot;,
+    &quot;accountId&quot;: &quot;27ad4f1e-0e25-4723-9970-ebe9126e9c04&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
 }</component>
@@ -121,7 +120,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774639396391</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="28/03/2026">
+      <option name="closed" value="true" />
+      <created>1774650888317</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1774650888317</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -129,6 +136,7 @@
     <MESSAGE value="26/03/2026" />
     <MESSAGE value="27/03/2026" />
     <MESSAGE value="27/03/2026 22:23" />
-    <option name="LAST_COMMIT_MESSAGE" value="27/03/2026 22:23" />
+    <MESSAGE value="28/03/2026" />
+    <option name="LAST_COMMIT_MESSAGE" value="28/03/2026" />
   </component>
 </project>

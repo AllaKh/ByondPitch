@@ -73,7 +73,7 @@ class MeetingRoomPage(BasePage):
 
         # Wait for End Call button
         self.page.wait_for_selector(self.END_CALL_BUTTON, state="visible")
-        self.page.wait_for_timeout(1500)
+        self.page.wait_for_timeout(3000)
 
         # Click End Call
         self.page.locator(self.END_CALL_BUTTON).last.click(force=True)
