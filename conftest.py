@@ -1,6 +1,8 @@
 import pytest
+from pathlib import Path
 from playwright.sync_api import sync_playwright
 from config import BASE_URL
+
 
 # ----------------- Session-scoped Playwright -----------------
 @pytest.fixture(scope="session")
@@ -9,29 +11,36 @@ def playwright_instance():
     with sync_playwright() as p:
         yield p
 
+
 # ----------------- Session-scoped Browser -----------------
 @pytest.fixture(scope="session")
 def browser(playwright_instance):
-    """Launch browser once per session."""
+    """Launch browser once per session with fake video input."""
+
+    video_file = Path("video/manager1.y4m").resolve()
+
     browser = playwright_instance.chromium.launch(
         headless=False,
         args=[
             "--use-fake-ui-for-media-stream",
             "--use-fake-device-for-media-stream",
-            "--allow-file-access-from-files",
+            f"--use-file-for-fake-video-capture={video_file}",
         ],
     )
+
     yield browser
-    # Ensure browser closes at the end of the session
+
     try:
         browser.close()
     except Exception:
         pass
 
+
 # ----------------- Function-scoped Page -----------------
 @pytest.fixture
 def page(browser):
     """Create new context and page per test."""
+
     context = browser.new_context(
         viewport={"width": 1280, "height": 800},
         locale="he-IL",
@@ -45,7 +54,6 @@ def page(browser):
 
     yield page
 
-    # Ensure context closes safely even if test fails
     try:
         context.close()
     except Exception:
